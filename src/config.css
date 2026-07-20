@@ -1,0 +1,27 @@
+/* src/config.css */
+:root {
+  /* ========================================== */
+  /* 1. PALETA DE COLORES (Cyber-Medical Theme) */
+  /* ========================================== */
+  --color-bg-center: #000000;        /* Centro del fondo (Negro puro) */
+  --color-bg-mid: #020b1e;           /* Azul oscuro intermedio */
+  --color-bg-outer: #1e0a2b;         /* Púrpura/Violeta exterior */
+  
+  --color-primary: #06b6d4;          /* Cian Neón principal */
+  --color-secondary: #a855f7;        /* Púrpura Neón */
+  --color-accent-cross: #06b6d4;     /* Color de la Cruz Médica */
+
+  /* ========================================== */
+  /* 2. TIEMPOS Y ANIMACIONES                   */
+  /* ========================================== */
+  --transition-layer-speed: 700ms;   /* Velocidad de entrada/salida de capas */
+  --cooldown-scroll: 600ms;          /* Tiempo de espera entre cada scroll */
+  --cross-interval-ms: 10000;        /* Cada cuánto aparece la Cruz (en ms: 10000 = 10s) */
+  --cross-visible-duration: 150;     /* Cuántos frames se queda la Cruz titilando */
+
+  /* ========================================== */
+  /* 3. PARÁMETROS DEL CANVAS Y PARTICULAS     */
+  /* ========================================== */
+  --particle-count: 80;              /* Cantidad de partículas en pantalla */
+  --particle-speed-mult: 1;          /* Multiplicador de velocidad */
+}
