@@ -27,6 +27,30 @@
 }
 
 /* Estilos de tu barra personalizada */
+.feature-columns {
+  width: 100%;
+  max-width: 72rem;
+}
+
+.feature-column {
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .feature-columns {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .feature-column:not(:last-child) {
+    padding-right: 2rem;
+    margin-right: 2rem;
+    border-right: 1px solid rgba(148, 163, 184, 0.5);
+  }
+}
+
 .navbar {
   position: fixed;
   top: 0;
