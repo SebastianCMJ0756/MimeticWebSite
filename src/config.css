@@ -51,6 +51,373 @@
   }
 }
 
+/* Estilos para la órbita y nodos en la Capa 03 */
+.orbit-circle {
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(244, 63, 94, 0.18);
+  filter: blur(0.2px);
+  opacity: 0.95;
+}
+
+.orbit-node {
+  box-shadow: 0 0 12px rgba(244,63,94,0.25);
+  transform: translateZ(0);
+}
+
+/* Aumentar presencia del círculo en pantallas grandes y evitar recortes */
+@media (min-width: 1024px) {
+  .orbit-circle {
+    right: -140px;
+    opacity: 0.95;
+  }
+
+  .orbit-node.node-2 {
+    box-shadow: 0 0 18px rgba(244,63,94,0.35);
+  }
+}
+
+/* Estilos de la Capa 03 - gráfico derecho */
+.capa3-section {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  overflow: hidden;
+}
+
+.capa3-mosaic-animator {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.capa3-mosaic-wave {
+  position: absolute;
+  opacity: 0;
+  animation: mosaic-wave-cycle 12s linear infinite;
+}
+
+.capa3-mosaic-wave-left {
+  left: 0%;
+  top: 10%;
+}
+
+.capa3-mosaic-wave-right {
+  right: 0%;
+  top: 10%;
+}
+
+.capa3-mosaic-wave-top {
+  left: 50%;
+  top: 0%;
+  transform: translateX(-50%);
+}
+
+.capa3-mosaic-wave-bottom {
+  left: 50%;
+  bottom: 0%;
+  transform: translateX(-50%);
+}
+
+.capa3-mosaic-big {
+  width: 3.4rem;
+  height: 3.4rem;
+  background: rgba(34,211,238,0.28);
+  border: 1px solid rgba(34,211,238,0.4);
+  box-shadow: 0 0 24px rgba(34,211,238,0.18);
+  border-radius: 0.6rem;
+  opacity: 0;
+  animation: mosaic-big-pop 12s linear infinite;
+}
+
+.capa3-mosaic-piece {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  background: var(--color, rgba(34,211,238,0.9));
+  border-radius: 0.25rem;
+  transform: translate(0, 0) scale(0.75);
+  opacity: 0;
+  animation: mosaic-piece-burst 12s linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes mosaic-big-pop {
+  0%, 5% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  10%, 20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  25%, 35% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+  40%, 45% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+}
+
+@keyframes mosaic-piece-burst {
+  0%, 15% {
+    opacity: 0;
+    transform: translate(0,0) scale(0.75);
+  }
+  18%, 32% {
+    opacity: 1;
+    transform: translate(var(--x, 0), var(--y, 0)) scale(1);
+  }
+  40%, 55% {
+    opacity: 1;
+    transform: translate(calc(var(--x, 0) * 1.4), calc(var(--y, 0) * 1.4)) scale(0.85);
+  }
+  60%, 65% {
+    opacity: 0.4;
+    transform: translate(calc(var(--x, 0) * 1.7), calc(var(--y, 0) * 1.7)) scale(0.7);
+  }
+  70%, 100% {
+    opacity: 0;
+    transform: translate(calc(var(--x, 0) * 2), calc(var(--y, 0) * 2)) scale(0.6);
+  }
+}
+
+@keyframes mosaic-wave-cycle {
+  0%, 15% {
+    opacity: 0;
+  }
+  16%, 30% {
+    opacity: 1;
+  }
+  31%, 45% {
+    opacity: 1;
+  }
+  46%, 100% {
+    opacity: 0;
+  }
+}
+
+.capa3-mosaic-wave-left,
+.capa3-mosaic-wave-right,
+.capa3-mosaic-wave-top,
+.capa3-mosaic-wave-bottom {
+  animation: mosaic-wave-cycle 16s linear infinite;
+}
+
+.capa3-mosaic-wave-left {
+  animation-delay: 0s;
+}
+
+.capa3-mosaic-wave-top {
+  animation-delay: 4s;
+}
+
+.capa3-mosaic-wave-right {
+  animation-delay: 8s;
+}
+
+.capa3-mosaic-wave-bottom {
+  animation-delay: 12s;
+}
+
+.capa3-row {
+  width: 100%;
+  max-width: 1140px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.capa3-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 520px;
+}
+
+.capa3-eyebrow {
+  color: #22d3ee;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.capa3-heading {
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  line-height: 1.02;
+  color: #ffffff;
+}
+
+.capa3-copy {
+  color: #cbd5e1;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.capa3-copy-muted {
+  color: #94a3b8;
+}
+
+.capa3-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(34,211,238,0.4);
+  color: #ffffff;
+  background: rgba(15,23,42,0.4);
+  text-decoration: none;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.capa3-button:hover {
+  background: rgba(34,211,238,0.15);
+  transform: translateY(-1px);
+}
+
+.capa3-right {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.capa3-graphic {
+  position: relative;
+  width: min(100%, 620px);
+  aspect-ratio: 1.25;
+  border-radius: 2rem;
+  border: 1px solid rgba(34,211,238,0.12);
+  background: radial-gradient(circle at top right, rgba(34,211,238,0.08), transparent 26%), radial-gradient(circle at bottom left, rgba(168,85,247,0.08), transparent 22%), rgba(15,23,42,0.95);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.38);
+  overflow: hidden;
+}
+
+.capa3-graphic-ring {
+  position: absolute;
+  inset: 1.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(56,189,248,0.18);
+}
+
+.capa3-graphic-ring.ring-inner {
+  inset: 22%;
+  border-color: rgba(168,85,247,0.15);
+  opacity: 0.82;
+}
+
+.capa3-graphic-grid {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(34,211,238,0.12), transparent 18%), radial-gradient(circle at bottom right, rgba(168,85,247,0.12), transparent 16%);
+}
+
+.capa3-graphic .capa3-dot {
+  position: absolute;
+  left: var(--left, 50%);
+  top: var(--top, 50%);
+  width: var(--size, 0.75rem);
+  height: var(--size, 0.75rem);
+  background: var(--color, rgba(34,211,238,0.9));
+  border-radius: 9999px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.16), inset 0 0 6px rgba(255,255,255,0.12);
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.capa3-graphic .capa3-dot:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+  box-shadow: 0 0 24px rgba(255,255,255,0.32), inset 0 0 10px rgba(255,255,255,0.2);
+}
+
+.capa3-card {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: min(240px, 60%);
+  padding: 1.25rem;
+  border-radius: 1.75rem;
+  background: rgba(15,23,42,0.92);
+  border: 1px solid rgba(34,211,238,0.14);
+  box-shadow: 0 20px 80px rgba(34,211,238,0.14);
+}
+
+.capa3-card-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.7rem;
+  color: #38bdf8;
+}
+
+.capa3-card-title {
+  margin-top: 0.8rem;
+  color: #ffffff;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.capa3-card-copy {
+  margin-top: 0.8rem;
+  color: #94a3b8;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+@media (min-width: 1024px) {
+  .capa3-row {
+    grid-template-columns: 42% 58%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .capa3-section {
+    padding: 2rem 1rem;
+  }
+
+  .capa3-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .capa3-graphic {
+    width: 100%;
+    aspect-ratio: 1.1;
+  }
+}
+
+@media (max-width: 640px) {
+  .capa3-heading {
+    font-size: 2.25rem;
+  }
+
+  .capa3-card {
+    width: 100%;
+    right: 0.75rem;
+    left: 0.75rem;
+    bottom: 1rem;
+  }
+}
+
+/* Pequeños ajustes para las tarjetas del lado derecho */
+.max-w-md .w-full {
+  max-width: 420px;
+}
+
+
 .navbar {
   position: fixed;
   top: 0;
