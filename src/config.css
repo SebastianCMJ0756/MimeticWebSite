@@ -412,6 +412,156 @@
   }
 }
 
+/* Estilos para Capa 04 - Equipo de Mimetic */
+.layer3-bottom-panel {
+  /* altura especificada en el HTML para mayor control responsive */
+}
+
+.layer3-team-title {
+  text-shadow: 0 0 20px rgba(148, 163, 184, 0.15);
+}
+
+.layer3-team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+  min-height: 20rem;
+}
+
+.layer3-team-content {
+  position: relative;
+  min-height: 28rem;
+}
+
+/* Forzar separación entre título y contenido del miembro */
+.layer3-bottom-panel .layer3-team-content {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .layer3-bottom-panel .layer3-team-content {
+    margin-top: 4.5rem;
+  }
+}
+
+.layer3-team-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para contenedores independientes */
+.layer3-team-title-wrap {
+  padding-bottom: 1.25rem;
+}
+
+.layer3-member-card {
+  display: block;
+}
+
+.layer3-avatar-ring {
+  display: grid;
+  place-items: center;
+}
+
+.layer3-team-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.layer3-team-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+/* Alinear el nombre con el inicio del texto de descripción */
+#member-name {
+  max-width: 42rem; /* igual a max-w-2xl */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  #member-name {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
+}
+
+.layer3-nav-button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 200ms ease, background-color 200ms ease, border-color 200ms ease;
+}
+
+.layer3-nav-button:hover {
+  background: rgba(34, 211, 238, 0.18);
+  border-color: rgba(34, 211, 238, 0.35);
+  transform: translateY(-2px);
+}
+
+#member-links a {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.08);
+  color: #cbd5e1;
+  transition: transform 200ms ease, background-color 200ms ease;
+}
+
+#member-links a:hover {
+  background: rgba(34,211,238,0.18);
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .layer3-team-grid {
+    grid-template-columns: auto minmax(280px,1fr) auto;
+  }
+
+  .layer3-team-links {
+    align-items: flex-end;
+  }
+}
+
+@media (max-width: 1024px) {
+  .layer3-team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .layer3-team-links {
+    align-items: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .layer3-bottom-panel {
+    top: unset;
+  }
+
+  .layer3-team-title {
+    font-size: 2.5rem;
+  }
+}
+
 /* Pequeños ajustes para las tarjetas del lado derecho */
 .max-w-md .w-full {
   max-width: 420px;
