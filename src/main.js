@@ -1,8 +1,284 @@
-// src/main.js
+// --- 0. FUNCIONES AUXILIARES PARA WEB THREADS ---
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return [1, 1, 1];
+  return [
+    parseInt(result[1], 16) / 255,
+    parseInt(result[2], 16) / 255,
+    parseInt(result[3], 16) / 255
+  ];
+}
+
+// Obtener OGL desde el objeto global (versión UMD expone Renderer, Program, etc. directamente en window)
+// Obtener OGL global
+function getOGL() {
+  if (window.OGL) return window.OGL;
+  if (typeof window.Renderer !== 'undefined') {
+    return {
+      Renderer: window.Renderer,
+      Program: window.Program,
+      Mesh: window.Mesh,
+      Triangle: window.Triangle
+    };
+  }
+  return null;
+}
+
+const webThreadsVertexShader = `#version 300 es
+in vec2 position;
+void main() {
+  gl_Position = vec4(position, 0.0, 1.0);
+}
+`;
+
+const webThreadsFragmentShader = `#version 300 es
+precision highp float;
+uniform vec2 iResolution;
+uniform float iTime;
+uniform float uSpeed;
+uniform float uThreadCount;
+uniform float uFrequency;
+uniform float uSpread;
+uniform float uTaper;
+uniform float uPosition;
+uniform float uFanMode;
+uniform float uGlow;
+uniform float uFalloff;
+uniform float uThickness;
+uniform float uBrightness;
+uniform float uOpacity;
+uniform float uMirror;
+uniform float uShimmer;
+uniform float uGrain;
+uniform float uGrainIntensity;
+uniform vec3 uColor1;
+uniform vec3 uColor2;
+uniform vec3 uColor3;
+uniform vec2 uMouse;
+uniform float uMouseStrength;
+uniform float uEnableMouse;
+uniform float uMouseActive;
+out vec4 fragColor;
+
+#define TAU 6.28318530718
+#define MAX_THREADS 10
+
+float glow(float x, float str, float dist) {
+  return dist / pow(max(x, 1e-4), str);
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / iResolution.xy;
+  float n = max(uThreadCount, 1.0);
+
+  float pinchX = uFanMode < 0.5 ? 0.5 : (uFanMode < 1.5 ? 0.0 : 1.0);
+  if (uEnableMouse > 0.5) {
+    pinchX = mix(pinchX, uMouse.x, clamp(uMouseStrength, 0.0, 1.0) * uMouseActive);
+  }
+
+  float spreadDx = uSpread * abs(uv.x - pinchX);
+  float baseT = iTime * uSpeed;
+  float tauOverN = TAU / n;
+  float mirror = uMirror > 0.5 ? sign(pinchX - uv.x) : 1.0;
+  bool doShimmer = uShimmer > 0.5;
+  float shimmerT = iTime * 1.7;
+  float invThickness = 1.0 / max(uThickness, 0.01);
+  float xFreq = uv.x * uFrequency;
+  float yOff = uv.y - uPosition;
+  float ciScale = n > 1.0 ? 1.0 / (n - 1.0) : 0.0;
+
+  vec3 col = vec3(0.0);
+  float gsum = 0.0;
+
+  for (int idx = 0; idx < MAX_THREADS; idx++) {
+    float i = float(idx);
+    if (i >= n) break;
+
+    float amplitude = spreadDx * (1.0 + i * uTaper);
+    float shimmer = doShimmer ? sin(shimmerT + i * 1.3) * 0.35 : 0.0;
+    float phase = (baseT + i * tauOverN) * mirror + shimmer;
+
+    float sdf = abs(yOff + sin(xFreq + phase) * amplitude) * invThickness;
+
+    float g = glow(sdf, uFalloff, uGlow);
+    float ci = i * ciScale;
+    vec3 threadCol = mix(uColor1, uColor2, ci);
+
+    col += g * threadCol;
+    gsum += g;
+  }
+
+  float coreAmt = smoothstep(0.5, 2.2, gsum);
+  col = mix(col, uColor3 * gsum, coreAmt * 0.5);
+
+  float bright = uBrightness;
+  if (uEnableMouse > 0.5) {
+    vec2 md = uv - uMouse;
+    float d2 = dot(md, md);
+    bright += clamp(uMouseStrength, 0.0, 1.0) * uMouseActive * exp(-d2 * 6.0) * 0.6;
+  }
+  col *= bright;
+
+  float alpha = clamp(gsum, 0.0, 1.0) * uOpacity;
+  vec3 outRgb = col * alpha;
+
+  if (uGrain > 0.5) {
+    float gv = (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233)) + iTime) * 43758.5453) - 0.5) * uGrainIntensity;
+    outRgb = clamp(outRgb + gv, 0.0, 1.0);
+    alpha = clamp(alpha + gv, 0.0, 1.0);
+  }
+
+  fragColor = vec4(outRgb, alpha);
+}
+`;
+
+function initWebThreads(options = {}) {
+  const container = document.getElementById('web-threads-bg');
+  if (!container) {
+    console.warn('Contenedor web-threads-bg no encontrado');
+    return;
+  }
+
+  const OGL = getOGL();
+  if (!OGL || !OGL.Renderer) {
+    console.warn('OGL no está disponible. Reintentando...');
+    setTimeout(() => initWebThreads(options), 100);
+    return;
+  }
+
+  const { Renderer, Program, Mesh, Triangle } = OGL;
+
+  // Opciones predeterminadas
+  const config = {
+    color1: options.color1 || '#5227FF',
+    color2: options.color2 || '#FF9FFC',
+    color3: options.color3 || '#FFFFFF',
+    speed: options.speed ?? 0.2,
+    threadCount: options.threadCount ?? 6,
+    frequency: options.frequency ?? 5.0,
+    spread: options.spread ?? 0.18,
+    taper: options.taper ?? 1.0,
+    position: options.position ?? 0.5,
+    fanMode: options.fanMode || 'center',
+    glow: options.glow ?? 0.02,
+    falloff: options.falloff ?? 0.6,
+    thickness: options.thickness ?? 1.1,
+    brightness: options.brightness ?? 0.6,
+    opacity: options.opacity ?? 1.0,
+    mirror: options.mirror ?? true,
+    shimmer: options.shimmer ?? false,
+    grain: options.grain ?? true,
+    grainIntensity: options.grainIntensity ?? 0.05,
+    mouseInteraction: options.mouseInteraction ?? true,
+    mouseStrength: options.mouseStrength ?? 0.3
+  };
+
+  try {
+    const renderer = new Renderer({
+      webgl: 2,
+      alpha: true,
+      premultipliedAlpha: true,
+      antialias: false,
+      dpr: Math.min(window.devicePixelRatio || 1, 2)
+    });
+
+    const gl = renderer.gl;
+    gl.clearColor(0, 0, 0, 0);
+    const canvas = gl.canvas;
+    container.appendChild(canvas);
+
+    const geometry = new Triangle(gl);
+    const program = new Program(gl, {
+      vertex: webThreadsVertexShader,
+      fragment: webThreadsFragmentShader,
+      uniforms: {
+        iTime: { value: 0 },
+        iResolution: { value: new Float32Array([1, 1]) },
+        uSpeed: { value: config.speed },
+        uThreadCount: { value: config.threadCount },
+        uFrequency: { value: config.frequency },
+        uSpread: { value: config.spread },
+        uTaper: { value: config.taper },
+        uPosition: { value: config.position },
+        uFanMode: { value: config.fanMode === 'left' ? 1 : config.fanMode === 'right' ? 2 : 0 },
+        uGlow: { value: config.glow },
+        uFalloff: { value: config.falloff },
+        uThickness: { value: config.thickness },
+        uBrightness: { value: config.brightness },
+        uOpacity: { value: config.opacity },
+        uMirror: { value: config.mirror ? 1.0 : 0.0 },
+        uShimmer: { value: config.shimmer ? 1.0 : 0.0 },
+        uGrain: { value: config.grain ? 1.0 : 0.0 },
+        uGrainIntensity: { value: config.grainIntensity },
+        uColor1: { value: new Float32Array(hexToRgb(config.color1)) },
+        uColor2: { value: new Float32Array(hexToRgb(config.color2)) },
+        uColor3: { value: new Float32Array(hexToRgb(config.color3)) },
+        uMouse: { value: new Float32Array([0.5, 0.5]) },
+        uMouseStrength: { value: config.mouseStrength },
+        uEnableMouse: { value: config.mouseInteraction ? 1.0 : 0.0 },
+        uMouseActive: { value: 0 }
+      }
+    });
+
+    const mesh = new Mesh(gl, { geometry, program });
+
+    const setSize = () => {
+      const rect = container.getBoundingClientRect();
+      const w = Math.max(1, Math.floor(rect.width));
+      const h = Math.max(1, Math.floor(rect.height));
+      renderer.setSize(w, h);
+      program.uniforms.iResolution.value[0] = gl.drawingBufferWidth;
+      program.uniforms.iResolution.value[1] = gl.drawingBufferHeight;
+    };
+
+    window.addEventListener('resize', setSize);
+    setSize();
+
+    // Escuchar eventos del ratón
+    const currentMouse = [0.5, 0.5];
+    const targetMouse = [0.5, 0.5];
+    let currentActive = 0;
+    let targetActive = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      targetMouse[0] = e.clientX / window.innerWidth;
+      targetMouse[1] = 1.0 - (e.clientY / window.innerHeight);
+      targetActive = 1;
+    });
+
+    const t0 = performance.now();
+    function loop(t) {
+      program.uniforms.iTime.value = (t - t0) * 0.001;
+      currentMouse[0] += 0.05 * (targetMouse[0] - currentMouse[0]);
+      currentMouse[1] += 0.05 * (targetMouse[1] - currentMouse[1]);
+      currentActive += 0.05 * (targetActive - currentActive);
+
+      program.uniforms.uMouse.value[0] = currentMouse[0];
+      program.uniforms.uMouse.value[1] = currentMouse[1];
+      program.uniforms.uMouseActive.value = currentActive;
+
+      renderer.render({ scene: mesh });
+      requestAnimationFrame(loop);
+    }
+
+    requestAnimationFrame(loop);
+    console.log('✅ WebThreads inicializado correctamente');
+  } catch (error) {
+    console.error('❌ Error al inicializar WebThreads:', error);
+  }
+}
+
+// --- CONFIGURACIÓN GLOBAL (independiente del fondo) ---
+const CONFIG = {
+  cooldownScroll: 600, // Tiempo de espera entre cambios de capa
+};
+
+// --- DESHABILITADO: Usar WebThreads en su lugar ---
+if (false) {
 
 // --- 1. LEER CONFIGURACIÓN DESDE VARIABLES CSS ---
 const cssVars = getComputedStyle(document.documentElement);
-const CONFIG = {
+const CONFIG_LEGACY = {
   colorBgCenter: cssVars.getPropertyValue('--color-bg-center').trim() || '#000000',
   colorBgMid: cssVars.getPropertyValue('--color-bg-mid').trim() || '#020b1e',
   colorBgOuter: cssVars.getPropertyValue('--color-bg-outer').trim() || '#1e0a2b',
@@ -43,7 +319,7 @@ class Particle {
     this.size = Math.random() * 2 + 0.8;
     this.alpha = 0;
     this.maxAlpha = Math.random() * 0.6 + 0.3;
-    this.color = Math.random() > 0.5 ? CONFIG.colorPrimary : CONFIG.colorSecondary;
+    this.color = Math.random() > 0.5 ? CONFIG_LEGACY.colorPrimary : CONFIG_LEGACY.colorSecondary;
     this.dist = 0;
   }
   update() {
@@ -69,7 +345,7 @@ class Particle {
 }
 
 const particles = [];
-for (let i = 0; i < CONFIG.particleCount; i++) particles.push(new Particle());
+for (let i = 0; i < CONFIG_LEGACY.particleCount; i++) particles.push(new Particle());
 
 // Clase de la Cruz Neón
 class NeonCross {
@@ -99,7 +375,7 @@ class NeonCross {
       this.timer++;
       if (Math.random() < 0.12) this.alpha = Math.random() * 0.3 + 0.2;
       else this.alpha = 0.85;
-      if (this.timer > CONFIG.crossVisibleDuration) this.state = 'fade-out';
+      if (this.timer > CONFIG_LEGACY.crossVisibleDuration) this.state = 'fade-out';
     } else if (this.state === 'fade-out') {
       this.alpha -= 0.02;
       if (this.alpha <= 0) { this.alpha = 0; this.active = false; this.state = 'hidden'; }
@@ -109,10 +385,10 @@ class NeonCross {
     if (!this.active || this.alpha <= 0) return;
     ctx.save();
     ctx.globalAlpha = this.alpha;
-    ctx.strokeStyle = CONFIG.colorCross;
+    ctx.strokeStyle = CONFIG_LEGACY.colorCross;
     ctx.lineWidth = 2.5;
     ctx.shadowBlur = 14;
-    ctx.shadowColor = CONFIG.colorCross;
+    ctx.shadowColor = CONFIG_LEGACY.colorCross;
     ctx.translate(this.x, this.y);
     ctx.beginPath();
     ctx.moveTo(-this.size/2, 0); ctx.lineTo(this.size/2, 0);
@@ -123,7 +399,7 @@ class NeonCross {
 }
 
 const neonCross = new NeonCross();
-setInterval(() => { neonCross.spawn(); }, CONFIG.crossInterval);
+setInterval(() => { neonCross.spawn(); }, CONFIG_LEGACY.crossInterval);
 setTimeout(() => { neonCross.spawn(); }, 1500);
 
 // Bucle de Animación
@@ -131,10 +407,10 @@ function animate() {
   ctx.clearRect(0, 0, width, height);
 
   const grad = ctx.createRadialGradient(centerX, centerY, 30, centerX, centerY, Math.max(width, height) * 0.75);
-  grad.addColorStop(0, CONFIG.colorBgCenter);
-  grad.addColorStop(0.35, CONFIG.colorBgMid);
-  grad.addColorStop(0.7, CONFIG.colorBgOuter);
-  grad.addColorStop(1, CONFIG.colorBgCenter);
+  grad.addColorStop(0, CONFIG_LEGACY.colorBgCenter);
+  grad.addColorStop(0.35, CONFIG_LEGACY.colorBgMid);
+  grad.addColorStop(0.7, CONFIG_LEGACY.colorBgOuter);
+  grad.addColorStop(1, CONFIG_LEGACY.colorBgCenter);
 
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, width, height);
@@ -146,6 +422,8 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
+
+} // FIN: Código anterior deshabilitado
 
 // --- 3. NAVEGACIÓN Y CAMBIO DE CAPAS ---
 let currentLayer = 0;
@@ -339,3 +617,31 @@ window.prevMember = prevMember;
 // Cargar el primer participante por defecto
 document.addEventListener('DOMContentLoaded', updateMemberCard);
 updateMemberCard();
+
+function startWebThreads() {
+  const OGL = getOGL();
+  if (OGL && (OGL.Renderer || window.Renderer)) {
+    console.log('✅ OGL cargado correctamente, inicializando WebThreads...');
+    initWebThreads({
+      color1: "#5227FF",
+      color2: "#FF9FFC",
+      color3: "#FFFFFF",
+      speed: 0.2,
+      threadCount: 6,
+      frequency: 5.0,
+      spread: 0.18,
+      thickness: 1.1,
+      brightness: 0.6,
+      opacity: 0.8
+    });
+  } else {
+    console.log('OGL aún no disponible, reintentando...');
+    setTimeout(startWebThreads, 150);
+  }
+}
+// Esperar a que el DOM esté completamente cargado
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startWebThreads);
+} else {
+  startWebThreads();
+}

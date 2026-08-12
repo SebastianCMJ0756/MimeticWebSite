@@ -7,6 +7,12 @@
   <link href="./dist/output.css" rel="stylesheet">
   <link href="./src/config.css" rel="stylesheet">
   
+<!-- Reemplaza el CDN viejo por este import como módulo ES -->
+  <script type="module">
+    import * as OGL from 'https://cdn.jsdelivr.net/npm/ogl@0.0.100/src/index.mjs';
+    window.OGL = OGL;
+  </script>
+  
   <style>
     .layer-transition {
       transition: all var(--transition-layer-speed) cubic-bezier(0.4, 0, 0.2, 1);
@@ -16,6 +22,9 @@
 </head>
 
 <body class="h-full relative font-sans select-none bg-black">
+<!--  ////  FONDO ANIMADO WEB THREADS //// -->
+  <div id="web-threads-bg" class="fixed inset-0 z-0 pointer-events-none"></div>
+
 <!--  ////  Barra de navegacion //// -->  
   <header class="navbar">
     <div class="navbar-container">
@@ -26,8 +35,8 @@
     </div>
   </header>
 
-  <!--  ////  Parte de fondo y del canvas //// -->
-  <div class="fixed inset-0 z-0 overflow-hidden">
+  <!--  ////  Parte de fondo del canvas de partículas (DESHABILITADO - usando WebThreads en su lugar) //// -->
+  <div class="fixed inset-0 z-0 overflow-hidden" style="display: none;">
     <canvas id="bg-canvas" class="w-full h-full block"></canvas>
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20 pointer-events-none"></div>
   </div>
