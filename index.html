@@ -25,7 +25,7 @@
 <!--  ////  FONDO ANIMADO WEB THREADS //// -->
   <div id="web-threads-bg" class="fixed inset-0 z-0 pointer-events-none"></div>
 
-<!--  ////  Barra de navegacion //// -->  
+  <!-- //// Barra de navegación //// -->  
   <header class="navbar">
     <div class="navbar-container">
       <!-- Logo -->
@@ -34,8 +34,7 @@
       </a>
     </div>
   </header>
-
-  <!--  ////  Parte de fondo del canvas de partículas (DESHABILITADO - usando WebThreads en su lugar) //// -->
+  <!--  ////  Parte de fondo (usando WebThreads de Reactbits) //// -->
   <div class="fixed inset-0 z-0 overflow-hidden" style="display: none;">
     <canvas id="bg-canvas" class="w-full h-full block"></canvas>
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20 pointer-events-none"></div>
@@ -52,25 +51,55 @@
   <!-- ////  Contenido principal  //// -->
   <main class="relative z-10 w-full h-full">
 
-    <!-- CAPA 01 (presentacion / portada)-->
-    <section id="layer-0" class="layer-transition absolute inset-0 flex flex-col items-center justify-center p-6 text-center opacity-100 scale-100 pointer-events-auto">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-black/60 text-cyan-400 text-xs font-mono tracking-widest mb-4 backdrop-blur-md">
-        <span>Gemelo digital en tiempo real</span>
+
+    <!-- CAPA 01 (#layer-0) - Presentacion Mimetic -->
+    <section id="layer-0" class="layer-transition absolute inset-0 opacity-100 scale-100 pointer-events-auto hero-layer-container">
+      
+      <!-- CONTENEDOR PRINCIPAL DE 2 COLUMNAS -->
+      <div class="hero-grid-wrapper">
+        
+        <!-- COLUMNA IZQUIERDA: TITULO Y TEXTOS -->
+        <div class="hero-left-col">
+          
+          <!-- Pill / Badge -->
+          <div class="hero-badge">
+            Gemelo digital en tiempo real
+          </div>
+
+          <!-- Título -->
+          <h1 class="hero-title">
+            Mimetic <br>
+            <span class="hero-gradient-text">
+              Replica Virtual Decisiones Reales
+            </span>
+          </h1>
+
+          <!-- Descripción -->
+          <p class="hero-description">
+            Gemelo Digital para la Gestión Inteligente del Flujo de Pacientes en Hospitales
+          </p>
+
+        </div>
+
+        <!-- COLUMNA DERECHA: Espacio de la imagen Mimetic -->
+        <div class="hero-right-col">
+          <div class="hero-image-box">
+            <!-- Imagen real -->
+            <img src="Images/Mimetic_Test_Picture.jpg" alt="Mimetic Image" class="hero-img-element " />
+            
+
+
+          </div>
+        </div>
+
       </div>
-      <h1 class="text-5xl md:text-7xl font-black tracking-tight text-white max-w-4xl">
-        Mimetic <br>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
-          Replica Virtual Decisiones Reales
-        </span>
-      </h1>
-      <p class="text-slate-400 text-base md:text-lg max-w-xl mt-4 font-light">
-        Gemelo Digital para la Gestión Inteligente del Flujo de Pacientes en Hospitales
-      </p>
-      <div class="mt-12 text-xs font-mono text-cyan-400/70 animate-bounce">
+
+      <!-- NAVEGACIÓN CENTRADA EN LA PARTE INFERIOR -->
+      <div class="hero-scroll-hint">
         ↓ Para navegar usa Scroll o las flechas ↓
       </div>
-    </section>
 
+    </section>
 
     <!-- CAPA 02 (Información sobre Mimetic) -->
     <section id="layer-1" class="layer-transition absolute inset-0 flex flex-col items-center justify-center p-6 text-center opacity-0 scale-90 pointer-events-none">
