@@ -101,41 +101,180 @@
 
     </section>
 
-    <!-- CAPA 02 (Información sobre Mimetic) -->
-    <section id="layer-1" class="layer-transition absolute inset-0 flex flex-col items-center justify-center p-6 text-center opacity-0 scale-90 pointer-events-none">
-      
-      <!-- Título principal -->
-      <h2 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-16 md:mb-24 pb-4 mt-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
-        ¿Qué es Mimetic?
-      </h2>
+        <!-- CAPA 02 (#layer-1) - ¿QUÉ ES MIMETIC Y TRIAGE? (Glowmorphic Dark UI) -->
+    <section id="layer-1" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none flex flex-col items-center justify-between p-6 md:p-12 overflow-hidden z-10">
 
-      <br>
-      
-      <!-- Contenedor Flex en desktop con separadores verticales visibles -->
-      <div class="feature-columns max-w-6xl w-full flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-0">
+      <!-- Glow / Resplandor Ambiental central -->
+      <div class="layer1-glow-bg"></div>
+
+      <!-- CABECERA DE LA CAPA: Título + Control Segmentado Estilo Raycast -->
+      <div class="layer1-header w-full max-w-6xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 z-10 mt-16 md:mt-12">
         
-        <!-- Columna 1 -->
-        <div class="feature-column flex-1 flex flex-col items-center justify-between px-4 md:px-8">
-          <p class="text-cyan-400 text-base md:text-lg leading-relaxed font-medium text-center">
-            Es una solucion tecnologica a la saturacion de los servicios de urgencias, cancelacion de cirugias programadas y la mala asignacion de camas a los pacientes
+        <!-- Título Principal con Gradiente -->
+        <div class="text-left">
+          <h2 id="layer1-title" class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-none">
+            ¿Qué es <span class="layer1-title-gradient">Mimetic</span>?
+          </h2>
+          <p class="text-slate-500 text-xs md:text-sm mt-3 font-mono">
+            Solución tecnológica a la gestión de recursos hospitalarios y flujo de pacientes en tiempo real.
           </p>
-          <div class="w-6 h-6 bg-purple-600 rotate-45 mt-8 shrink-0"></div>
         </div>
 
-        <!-- Columna 2 -->
-        <div class="feature-column flex-1 flex flex-col items-center justify-between px-4 md:px-8">
-          <p class="text-cyan-400 text-base md:text-lg leading-relaxed font-medium text-center">
-            Mimetic es un gemelo digital que es aplicado a un hospital y permite crear una replica virutal de sus procesos fisicos (urgencias, camas, quirófanos, personal) que se actualiza en tiempo real
-          </p>
-          <div class="w-6 h-6 bg-purple-600 rotate-45 mt-8 shrink-0"></div>
+        <!-- Control Segmentado (Raycast Pill Switch) -->
+        <div class="raycast-segmented-control flex items-center p-1.5 rounded-full bg-slate-950/80 border border-white/10 backdrop-blur-md shadow-2xl">
+          <button id="btn-tab-mimetic" onclick="switchLayer1Tab('mimetic')" class="raycast-tab active flex items-center gap-2 px-5 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            Sobre Mimetic
+          </button>
+          <button id="btn-tab-triage" onclick="switchLayer1Tab('triage')" class="raycast-tab flex items-center gap-2 px-5 py-2 rounded-full text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Sobre el Triage
+          </button>
         </div>
 
-        <!-- Columna 3 -->
-        <div class="flex-1 flex flex-col items-center justify-between px-4 md:px-8">
-          <p class="text-cyan-400 text-base md:text-lg leading-relaxed font-medium text-center">
-            Es una solucion tecnologica a la saturacion de los servicios de urgencias, cancelacion de cirugias programadas y la mala asignacion de camas a los pacientes
-          </p>
-          <div class="w-6 h-6 bg-purple-600 rotate-45 mt-8 shrink-0"></div>
+      </div>
+
+      <!-- CAROUSEL / GRID DE CARDS INTERACTIVAS -->
+      <div class="layer1-cards-viewport w-full max-w-6xl my-auto z-10 py-6">
+        
+        <!-- VISTA MIMETIC (3 CARDS) -->
+        <div id="view-mimetic-cards" class="layer1-card-track flex gap-5 transition-all duration-500">
+          
+          <!-- Card 1 -->
+          <div onclick="selectGlowCard(this)" class="glow-card active group relative bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left cursor-pointer transition-all duration-300 hover:border-cyan-500/40">
+            <div class="card-glow-bleed bg-cyan-500/20"></div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2.5 rounded-xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <span class="text-xs font-mono text-cyan-400/80 bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-500/20">Contexto</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Que es MIMETIC?</h3>
+            <p class="text-slate-300 text-sm leading-relaxed font-normal">
+              Es una solución tecnológica a la saturación de los servicios de urgencias, cancelación de cirugías programadas y la mala asignación de camas a los pacientes.
+            </p>
+            <p class="text-slate-300 text-sm leading-relaxed font-normal">
+              Mimetic utiliza inteligencia artificial y simulación para optimizar la gestión de recursos en entornos hospitalarios.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div onclick="selectGlowCard(this)" class="glow-card group relative bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left cursor-pointer transition-all duration-300 hover:border-cyan-500/40">
+            <div class="card-glow-bleed bg-purple-500/20"></div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2.5 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m14-6h2m-2 6h2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+              </div>
+              <span class="text-xs font-mono text-purple-400/80 bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-500/20">Gemelo Digital MIMETIC</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Es una réplica virtual</h3>
+            <p class="text-slate-300 text-sm leading-relaxed font-normal">
+              Mimetic crea una réplica virtual de sus procesos físicos (urgencias, camas, quirófanos, personal) que se actualiza en tiempo real.
+            </p>
+            <p class="text-slate-300 text-sm leading-relaxed font-normal">
+              Esta réplica permite simular diferentes escenarios y tomar decisiones informadas para mejorar la eficiencia operativa.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div onclick="selectGlowCard(this)" class="glow-card group relative bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left cursor-pointer transition-all duration-300 hover:border-cyan-500/40">
+            <div class="card-glow-bleed bg-cyan-500/20"></div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2.5 rounded-xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              </div>
+              <span class="text-xs font-mono text-cyan-400/80 bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-500/20">Una solucion a...</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Gestión de Quirófanos y Camas</h3>
+            <p class="text-slate-300 text-sm leading-relaxed font-normal">
+              Optimiza la rotación de hospitalización, previene cuellos de botella en salas de cirugía y asigna automáticamente el recurso óptimo a cada paciente.
+            </p>
+            <p class="text-slate-300 text-sm leading-relaxed font-normal">
+              Tambien es una ayuda a los medicos y doctores a gestionar mejor las historias clinicas de los pacientes, ya que MIMETIC integra la opcion de voz para que el medico se enfoque mas en el tratamiento del paciente y no en la documentacion de la historia clinica.
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- VISTA TRIAGE (OCULTA POR DEFECTO) -->
+        <div id="view-triage-cards" class="hidden layer1-card-track flex gap-5 transition-all duration-500">
+
+          <!-- Card Triage 1: Introducción -->
+          <div onclick="selectGlowCard(this)" class="glow-card active group relative bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left cursor-pointer transition-all duration-300 hover:border-cyan-500/40">
+            <div class="card-glow-bleed bg-cyan-500/25"></div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2.5 rounded-xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m9-9H3m3.5-5.5 11 11m0-11-11 11"/></svg>
+              </div>
+              <span class="text-xs font-mono text-cyan-400/80 bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-500/20">Concepto clave</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">¿Qué es el Triage?</h3>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              Es un proceso clínico que consiste en la evaluacion y clasificacion de pacientes según la gravedad de su estado para priorizar la atención y asignar el recurso adecuado en el momento correcto.
+            </p>
+          </div>
+          
+          <!-- Card Triage 2 -->
+          <div onclick="selectGlowCard(this)" class="glow-card group relative bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left cursor-pointer transition-all duration-300 hover:border-red-500/40">
+            <div class="card-glow-bleed bg-red-500/25"></div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md bg-red-950 border border-red-500/40 text-red-400 font-mono text-xs font-bold">Nivel I & II</span>
+              <span class="text-xs font-mono text-slate-400">Atención Inmediata</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Atencion inmediata / Espera maxima de 30 minutos</h3>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              Son los pacientes que estan en estado critico o pueden evolucionar hacia un estado critico en minutos. Requieren atención inmediata y prioritaria para salvar su vida.
+            </p>
+          </div>
+
+          <!-- Card Triage 3 -->
+          <div onclick="selectGlowCard(this)" class="glow-card group relative bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left cursor-pointer transition-all duration-300 hover:border-amber-500/40">
+            <div class="card-glow-bleed bg-amber-500/25"></div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md bg-amber-950 border border-amber-500/40 text-amber-400 font-mono text-xs font-bold">Nivel III</span>
+              <span class="text-xs font-mono text-slate-400">Urgencia Previsible</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Espera hasta de 4 horas</h3>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              La condicion del paciente no es critica, pero puede evolucionar a un estado critico si no se atiende en un tiempo prudente. Requiere atención prioritaria y seguimiento constante. 
+            </p>
+          </div>
+
+          <!-- Card Triage 4 -->
+          <div onclick="selectGlowCard(this)" class="glow-card group relative bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-left cursor-pointer transition-all duration-300 hover:border-emerald-500/40">
+            <div class="card-glow-bleed bg-emerald-500/25"></div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-bold">Nivel IV & V</span>
+              <span class="text-xs font-mono text-slate-400">Consulta Menor</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">No es urgencia</h3>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              El paciente no presenta riesgo vital inminente y puede ser atendido en un entorno de consulta menor.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PIE DE PAGINA DE LA CAPA (Botón de Acción + Controles de Carrusel) -->
+      <div class="w-full max-w-6xl flex items-center justify-between z-10">
+        
+        <!-- Link Enlace Raycast Inferior Izquierdo -->
+        <a href="#" class="layer1-more-link inline-flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-cyan-400 transition-colors">
+          <span>Explorar módulos de simulación</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+
+        <!-- Botones de Navegación Raycast (Flechas carrusel) -->
+        <div class="layer1-carousel-nav flex items-center gap-3">
+          <button onclick="cycleCards('prev')" aria-label="Tarjeta anterior" class="layer1-arrow p-2.5 rounded-full bg-slate-950/80 border border-white/10 text-slate-300 hover:text-white hover:border-cyan-500/50 hover:bg-slate-900 transition-all shadow-lg active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button onclick="cycleCards('next')" aria-label="Siguiente tarjeta" class="layer1-arrow p-2.5 rounded-full bg-slate-950/80 border border-white/10 text-slate-300 hover:text-white hover:border-cyan-500/50 hover:bg-slate-900 transition-all shadow-lg active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
 
       </div>

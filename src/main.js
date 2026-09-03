@@ -645,3 +645,62 @@ if (document.readyState === 'loading') {
 } else {
   startWebThreads();
 }
+
+// ==========================================
+// LÓGICA INTERACTIVA CAPA 02 (MIMETIC & TRIAGE)
+// ==========================================
+
+function switchLayer1Tab(tabName) {
+  const btnMimetic = document.getElementById('btn-tab-mimetic');
+  const btnTriage = document.getElementById('btn-tab-triage');
+  const viewMimetic = document.getElementById('view-mimetic-cards');
+  const viewTriage = document.getElementById('view-triage-cards');
+
+  if (tabName === 'mimetic') {
+    btnMimetic.classList.add('active', 'text-white');
+    btnMimetic.classList.remove('text-slate-400');
+    btnTriage.classList.remove('active', 'text-white');
+    btnTriage.classList.add('text-slate-400');
+
+    viewMimetic.classList.remove('hidden');
+    viewTriage.classList.add('hidden');
+  } else if (tabName === 'triage') {
+    btnTriage.classList.add('active', 'text-white');
+    btnTriage.classList.remove('text-slate-400');
+    btnMimetic.classList.remove('active', 'text-white');
+    btnMimetic.classList.add('text-slate-400');
+
+    viewTriage.classList.remove('hidden');
+    viewMimetic.classList.add('hidden');
+  }
+}
+
+// Selección visual de tarjetas estilo Raycast
+function selectGlowCard(cardElement) {
+  const parentContainer = cardElement.parentElement;
+  const cards = parentContainer.querySelectorAll('.glow-card');
+  
+  cards.forEach(card => card.classList.remove('active'));
+  cardElement.classList.add('active');
+}
+
+// Navegación por flechas (Ciclado de tarjetas activas)
+function cycleCards(direction) {
+  const activeView = document.querySelector('#view-mimetic-cards:not(.hidden), #view-triage-cards:not(.hidden)');
+  if (!activeView) return;
+
+  const cards = Array.from(activeView.querySelectorAll('.glow-card'));
+  let currentIndex = cards.findIndex(card => card.classList.contains('active'));
+
+  if (currentIndex === -1) currentIndex = 0;
+
+  cards[currentIndex].classList.remove('active');
+
+  if (direction === 'next') {
+    currentIndex = (currentIndex + 1) % cards.length;
+  } else {
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+  }
+
+  cards[currentIndex].classList.add('active');
+}
