@@ -704,3 +704,55 @@ function cycleCards(direction) {
 
   cards[currentIndex].classList.add('active');
 }
+
+// ==========================================
+// LÓGICA DE CAPTURA DE LEADS (CAPA 03)
+// ==========================================
+
+function validateLeadForm() {
+  const fullnameInput = document.getElementById('lead-fullname');
+  const emailInput = document.getElementById('lead-email');
+  const submitBtn = document.getElementById('btn-lead-submit');
+
+  const isFullnameValid = fullnameInput.value.trim().length > 0;
+  const isEmailValid = emailInput.value.trim().length > 0 && emailInput.value.includes('@');
+
+  if (isFullnameValid && isEmailValid) {
+    submitBtn.disabled = false;
+    submitBtn.classList.add('is-ready');
+    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+  } else {
+    submitBtn.disabled = true;
+    submitBtn.classList.remove('is-ready');
+    submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+  }
+}
+
+function handleLeadSubmit(event) {
+  event.preventDefault();
+
+  const fullnameInput = document.getElementById('lead-fullname');
+  const emailInput = document.getElementById('lead-email');
+  const submitBtn = document.getElementById('btn-lead-submit');
+  const btnText = document.getElementById('btn-text');
+
+  // 1. Bloquear entradas y botón
+  fullnameInput.disabled = true;
+  emailInput.disabled = true;
+  submitBtn.disabled = true;
+  submitBtn.classList.remove('is-ready');
+  submitBtn.classList.add('is-loading');
+
+  // 2. Estado de carga dentro del mismo boton
+  btnText.textContent = 'Cargando...';
+
+  // 3. Simulación de envío por red (2 segundos)
+  setTimeout(() => {
+    btnText.textContent = '¡Gracias por suscribirte! ✓';
+    submitBtn.classList.remove('is-loading');
+    submitBtn.classList.add('is-success');
+    submitBtn.style.backgroundColor = '#34d399';
+    submitBtn.style.color = '#052e16';
+    submitBtn.style.opacity = '1';
+  }, 2000);
+}

@@ -281,81 +281,84 @@
 
     </section>
 
-    <!-- CAPA 03  - Diseño derecho con texto a la izquierda -->
-    <section id="layer-2" class="layer-transition capa3-section opacity-0 scale-90 pointer-events-none">
-      <div class="capa3-mosaic-animator">
-        <div class="capa3-mosaic-wave capa3-mosaic-wave-left" data-side="left">
-          <div class="capa3-mosaic-big"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:-24px; --delay:0s; --color:rgba(34,211,238,0.95)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:-24px; --delay:0.07s; --color:rgba(34,211,238,0.82)"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:24px; --delay:0.14s; --color:rgba(34,211,238,0.72)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:24px; --delay:0.21s; --color:rgba(34,211,238,0.6)"></div>
-        </div>
-        <div class="capa3-mosaic-wave capa3-mosaic-wave-right" data-side="right">
-          <div class="capa3-mosaic-big"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:-24px; --delay:0.08s; --color:rgba(168,85,247,0.95)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:-24px; --delay:0.15s; --color:rgba(168,85,247,0.82)"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:24px; --delay:0.22s; --color:rgba(168,85,247,0.72)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:24px; --delay:0.29s; --color:rgba(168,85,247,0.6)"></div>
-        </div>
-        <div class="capa3-mosaic-wave capa3-mosaic-wave-top" data-side="top">
-          <div class="capa3-mosaic-big"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:24px; --delay:0.05s; --color:rgba(34,211,238,0.88)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:24px; --delay:0.12s; --color:rgba(168,85,247,0.88)"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:-8px; --delay:0.19s; --color:rgba(34,211,238,0.76)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:-8px; --delay:0.26s; --color:rgba(168,85,247,0.76)"></div>
-        </div>
-        <div class="capa3-mosaic-wave capa3-mosaic-wave-bottom" data-side="bottom">
-          <div class="capa3-mosaic-big"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:-24px; --delay:0.1s; --color:rgba(34,211,238,0.88)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:-24px; --delay:0.17s; --color:rgba(168,85,247,0.88)"></div>
-          <div class="capa3-mosaic-piece" style="--x:-24px; --y:8px; --delay:0.24s; --color:rgba(34,211,238,0.76)"></div>
-          <div class="capa3-mosaic-piece" style="--x:24px; --y:8px; --delay:0.31s; --color:rgba(168,85,247,0.76)"></div>
-        </div>
-      </div>
-      <div class="capa3-row">
+        <!-- CAPA 03 (#layer-2) - REGISTRO DE LEADS / INNOVACIÓN HOSPITALARIA -->
+    <section id="layer-2" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none flex flex-col items-center justify-center p-6 md:p-12 overflow-hidden z-10">
 
-        <!-- COLUMNA IZQUIERDA: Texto -->
-        <div class="capa3-left">
-          <span class="capa3-eyebrow">
-            Solución Integral
-          </span>
+      <!-- Resplandor Ambiental Radial -->
+      <div class="layer2-glow-bg"></div>
 
-          <h2 class="capa3-heading">
-            Todo-En-Uno
-          </h2>
+      <!-- CONTENEDOR PRINCIPAL DE 2 COLUMNAS -->
+      <div class="layer2-content w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-stretch z-10">
+        
+        <!-- COLUMNA IZQUIERDA: FORMULARIO GLOWMORPHIC DE SUSCRIPCIÓN -->
+        <div class="layer2-form-card bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden text-left">
+          <!-- Esquina de luz/Glow Bleed -->
+          <div class="card-glow-bleed bg-cyan-500/20"></div>
 
-          <p class="capa3-copy">
-            Mimetic responde a la necesidad de adaptar esta tecnologia al entorno hospitalario, incorporando interfaces naturales como voz para no aumentar la carga de trabajo del personal medico.
-
-          <p class="capa3-copy capa3-copy-muted">
-            Los sistemas actuales de gestion hospitalaria solo informan lo que ya ocurrio, no permiten anticipar saturacion ni probar estrategias de mejora sin riesgos.
-          </p>
-
-
-        </div>
-
-        <!-- COLUMNA DERECHA: Gráfico -->
-        <div class="capa3-right">
-          <div class="capa3-graphic">
-            <div class="capa3-graphic-ring ring-outer"></div>
-            <div class="capa3-graphic-ring ring-inner"></div>
-            <div class="capa3-graphic-grid"></div>
-            <div class="capa3-dot" style="--left:18%; --top:22%; --size:0.75rem; --color:#22d3ee"></div>
-            <div class="capa3-dot" style="--left:34%; --top:14%; --size:0.65rem; --color:#a855f7"></div>
-            <div class="capa3-dot" style="--left:52%; --top:24%; --size:0.85rem; --color:#22d3ee"></div>
-            <div class="capa3-dot" style="--left:42%; --top:42%; --size:0.55rem; --color:#a855f7"></div>
-            <div class="capa3-dot" style="--left:64%; --top:36%; --size:0.95rem; --color:#22d3ee"></div>
-            <div class="capa3-dot" style="--left:28%; --top:60%; --size:0.6rem; --color:#a855f7"></div>
-            <div class="capa3-dot" style="--left:48%; --top:70%; --size:0.75rem; --color:#22d3ee"></div>
-            <div class="capa3-dot" style="--left:70%; --top:56%; --size:0.8rem; --color:#a855f7"></div>
-            <div class="capa3-dot" style="--left:76%; --top:20%; --size:0.7rem; --color:#22d3ee"></div>
-            <div class="capa3-card">
-              <span class="capa3-card-label">Monitoreo 24/7</span>
-              <h3 class="capa3-card-title">Flujo de pacientes en vivo</h3>
-              <p class="capa3-card-copy">Visualiza ocupación de camas, quirófanos y turnos de personal con datos en tiempo real.</p>
-            </div>
+          <!-- Header del Formulario -->
+          <div class="mb-6">
+            <span class="inline-block px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-mono mb-3">
+              ¿Quieres mas informacion sobre Mimetic?
+            </span>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+              Suscribete para recibir proximas actualizaciones e información
+            </h2>
+            <p class="text-slate-300 text-sm md:text-base mt-3 leading-relaxed font-normal">
+              Te enviaremos nuevas actualizaciones a tu correo cuando mimetic tenga nuevas funcionalidades, mejoras y noticias sobre la fase beta de nuestro sistema de gemelo digital para hospitales.
+            </p>
           </div>
+
+          <!-- Formulario de Captura -->
+          <form id="lead-form" onsubmit="handleLeadSubmit(event)" class="space-y-4">
+            <!-- Input Nombres y Apellidos -->
+            <div>
+              <label for="lead-fullname" class="block text-xs font-mono text-slate-300 mb-1.5">Nombres y Apellidos *</label>
+              <input 
+                type="text" 
+                id="lead-fullname" 
+                placeholder="Ej. María Fernanda Gómez"
+                oninput="validateLeadForm()"
+                class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/40 transition-all duration-300"
+                required
+              />
+            </div>
+
+            <!-- Input Correo Electrónico -->
+            <div>
+              <label for="lead-email" class="block text-xs font-mono text-slate-300 mb-1.5">Correo Electrónico *</label>
+              <input 
+                type="email" 
+                id="lead-email" 
+                placeholder="ejemplo@hospital.com.co"
+                oninput="validateLeadForm()"
+                class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/40 transition-all duration-300"
+                required
+              />
+            </div>
+
+            <!-- Botón de Suscripción con Estados -->
+            <button 
+              type="submit" 
+              id="btn-lead-submit" 
+              disabled
+              class="layer2-submit w-full py-3.5 px-6 rounded-xl font-bold text-slate-200 bg-slate-800 opacity-50 cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 mt-2"
+            >
+              <span id="btn-text">Suscribirme</span>
+            </button>
+          </form>
+
+          <!-- Indicador de Estado -->
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center gap-2 text-xs font-mono text-slate-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Nota: Mimetic solo te enviara la informacion a tu correo registrado</span>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: DASHBOARD TÉCNICO / ILUSTRACIÓN -->
+        <div class="layer2-dashboard bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-4 md:p-6 flex items-center justify-center h-full min-h-[380px] relative overflow-hidden text-left shadow-2xl">
+          <!-- Glow Bleed Purpura -->
+          <div class="card-glow-bleed bg-purple-500/20"></div>
+          <img src="" alt="Imagen de mimetic" class="layer2-image" />
         </div>
 
       </div>
