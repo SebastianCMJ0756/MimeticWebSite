@@ -22,10 +22,10 @@
 </head>
 
 <body class="h-full relative font-sans select-none bg-black">
-<!--  ////  FONDO ANIMADO WEB THREADS //// -->
+  <!-- FONDO: WebThreads animado -->
   <div id="web-threads-bg" class="fixed inset-0 z-0 pointer-events-none"></div>
 
-  <!-- //// Barra de navegación //// -->  
+  <!-- NAVEGACION: barra superior -->
   <header class="navbar">
     <div class="navbar-container">
       <!-- Logo -->
@@ -34,13 +34,7 @@
       </a>
     </div>
   </header>
-  <!--  ////  Parte de fondo (usando WebThreads de Reactbits) //// -->
-  <div class="fixed inset-0 z-0 overflow-hidden" style="display: none;">
-    <canvas id="bg-canvas" class="w-full h-full block"></canvas>
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20 pointer-events-none"></div>
-  </div>
-
-  <!-- ////  Navegacion puntos laterales  //// -->
+  <!-- NAVEGACION: indicadores laterales de capas -->
   <div class="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3">
     <button onclick="changeLayer(0)" aria-label="Ir a capa 1" id="dot-0" class="w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-500/20 transition-all duration-300 cursor-pointer"></button>
     <button onclick="changeLayer(1)" aria-label="Ir a capa 2" id="dot-1" class="w-3 h-3 rounded-full bg-slate-700 transition-all duration-300 cursor-pointer"></button>
@@ -48,11 +42,11 @@
     <button onclick="changeLayer(3)" aria-label="Ir a capa 4" id="dot-3" class="w-3 h-3 rounded-full bg-slate-700 transition-all duration-300 cursor-pointer"></button>
   </div>
 
-  <!-- ////  Contenido principal  //// -->
+  <!-- CONTENIDO PRINCIPAL: capas de Mimetic -->
   <main class="relative z-10 w-full h-full">
 
 
-    <!-- CAPA 01 (#layer-0) - Presentacion Mimetic -->
+    <!-- CAPA 01: presentacion de Mimetic -->
     <section id="layer-0" class="layer-transition absolute inset-0 opacity-100 scale-100 pointer-events-auto hero-layer-container">
       
       <!-- CONTENEDOR PRINCIPAL DE 2 COLUMNAS -->
@@ -101,7 +95,7 @@
 
     </section>
 
-        <!-- CAPA 02 (#layer-1) - ¿QUÉ ES MIMETIC Y TRIAGE? (Glowmorphic Dark UI) -->
+      <!-- CAPA 02: MIMETIC y Triage -->
     <section id="layer-1" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none flex flex-col items-center justify-between p-6 md:p-12 overflow-hidden z-10">
 
       <!-- Glow / Resplandor Ambiental central -->
@@ -281,7 +275,7 @@
 
     </section>
 
-        <!-- CAPA 03 (#layer-2) - REGISTRO DE LEADS / INNOVACIÓN HOSPITALARIA -->
+      <!-- CAPA 03: registro de leads e innovacion hospitalaria -->
     <section id="layer-2" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none flex flex-col items-center justify-center p-6 md:p-12 overflow-hidden z-10">
 
       <!-- Resplandor Ambiental Radial -->
@@ -365,7 +359,7 @@
 
     </section>
 
-    <!-- CAPA 04 (#layer-3) - EQUIPO DE MIMETIC -->
+    <!-- CAPA 04: equipo de Mimetic -->
     <section id="layer-3" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none overflow-hidden bg-black flex items-start justify-center">
       <div class="layer3-bottom-panel relative w-full h-full bg-black overflow-y-auto flex items-start justify-center">
         <div class="relative z-10 w-full min-h-full flex flex-col items-center justify-start px-6 pt-28 pb-12 md:px-16 md:pt-36">
@@ -419,7 +413,7 @@
 
   </main>
 
-  <!-- VINCULAR EL ARCHIVO JS -->
+  <!-- SCRIPTS: logica interactiva -->
   <script src="./src/main.js"></script>
 </body>
 </html>

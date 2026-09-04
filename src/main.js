@@ -1,4 +1,6 @@
-// --- 0. FUNCIONES AUXILIARES PARA WEB THREADS ---
+// ==========================================
+// FONDO WEBTHREADS: UTILIDADES Y SHADERS
+// ==========================================
 function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   if (!result) return [1, 1, 1];
@@ -9,8 +11,6 @@ function hexToRgb(hex) {
   ];
 }
 
-// Obtener OGL desde el objeto global (versión UMD expone Renderer, Program, etc. directamente en window)
-// Obtener OGL global
 function getOGL() {
   if (window.OGL) return window.OGL;
   if (typeof window.Renderer !== 'undefined') {
@@ -132,6 +132,7 @@ void main() {
 }
 `;
 
+// Inicializacion y ciclo de renderizado del fondo WebThreads
 function initWebThreads(options = {}) {
   const container = document.getElementById('web-threads-bg');
   if (!container) {
@@ -268,164 +269,12 @@ function initWebThreads(options = {}) {
   }
 }
 
-// --- CONFIGURACIÓN GLOBAL (independiente del fondo) ---
+// ==========================================
+// NAVEGACION ENTRE CAPAS
+// ==========================================
 const CONFIG = {
   cooldownScroll: 600, // Tiempo de espera entre cambios de capa
 };
-
-// --- DESHABILITADO: Usar WebThreads en su lugar ---
-if (false) {
-
-// --- 1. LEER CONFIGURACIÓN DESDE VARIABLES CSS ---
-const cssVars = getComputedStyle(document.documentElement);
-const CONFIG_LEGACY = {
-  colorBgCenter: cssVars.getPropertyValue('--color-bg-center').trim() || '#000000',
-  colorBgMid: cssVars.getPropertyValue('--color-bg-mid').trim() || '#020b1e',
-  colorBgOuter: cssVars.getPropertyValue('--color-bg-outer').trim() || '#1e0a2b',
-  colorPrimary: cssVars.getPropertyValue('--color-primary').trim() || '#06b6d4',
-  colorSecondary: cssVars.getPropertyValue('--color-secondary').trim() || '#a855f7',
-  colorCross: cssVars.getPropertyValue('--color-accent-cross').trim() || '#06b6d4',
-  
-  cooldownScroll: parseInt(cssVars.getPropertyValue('--cooldown-scroll')) || 600,
-  crossInterval: parseInt(cssVars.getPropertyValue('--cross-interval-ms')) || 10000,
-  crossVisibleDuration: parseInt(cssVars.getPropertyValue('--cross-visible-duration')) || 150,
-  particleCount: parseInt(cssVars.getPropertyValue('--particle-count')) || 80,
-};
-
-// --- 2. CONFIGURACIÓN DEL CANVAS Y PARTÍCULAS ---
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
-let width, height, centerX, centerY;
-
-function resize() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-  centerX = width / 2;
-  centerY = height / 2;
-}
-window.addEventListener('resize', resize);
-resize();
-
-// Clase de Partículas
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = centerX + (Math.random() - 0.5) * 15;
-    this.y = centerY + (Math.random() - 0.5) * 15;
-    const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 1.8 + 0.4;
-    this.vx = Math.cos(angle) * speed;
-    this.vy = Math.sin(angle) * speed;
-    this.size = Math.random() * 2 + 0.8;
-    this.alpha = 0;
-    this.maxAlpha = Math.random() * 0.6 + 0.3;
-    this.color = Math.random() > 0.5 ? CONFIG_LEGACY.colorPrimary : CONFIG_LEGACY.colorSecondary;
-    this.dist = 0;
-  }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.dist = Math.hypot(this.x - centerX, this.y - centerY);
-    if (this.dist < 250) this.alpha = Math.min(this.maxAlpha, this.dist / 70);
-    else this.alpha -= 0.008;
-
-    if (this.alpha <= 0 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
-  }
-  draw() {
-    ctx.save();
-    ctx.globalAlpha = this.alpha;
-    ctx.fillStyle = this.color;
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
-}
-
-const particles = [];
-for (let i = 0; i < CONFIG_LEGACY.particleCount; i++) particles.push(new Particle());
-
-// Clase de la Cruz Neón
-class NeonCross {
-  constructor() {
-    this.active = false;
-    this.alpha = 0;
-    this.state = 'hidden';
-    this.timer = 0;
-    this.size = 28;
-  }
-  spawn() {
-    const angle = Math.random() * Math.PI * 2;
-    const dist = Math.random() * (Math.min(width, height) * 0.3) + 160;
-    this.x = centerX + Math.cos(angle) * dist;
-    this.y = centerY + Math.sin(angle) * dist;
-    this.alpha = 0;
-    this.state = 'fade-in';
-    this.timer = 0;
-    this.active = true;
-  }
-  update() {
-    if (!this.active) return;
-    if (this.state === 'fade-in') {
-      this.alpha += 0.03;
-      if (this.alpha >= 0.85) { this.alpha = 0.85; this.state = 'flicker'; }
-    } else if (this.state === 'flicker') {
-      this.timer++;
-      if (Math.random() < 0.12) this.alpha = Math.random() * 0.3 + 0.2;
-      else this.alpha = 0.85;
-      if (this.timer > CONFIG_LEGACY.crossVisibleDuration) this.state = 'fade-out';
-    } else if (this.state === 'fade-out') {
-      this.alpha -= 0.02;
-      if (this.alpha <= 0) { this.alpha = 0; this.active = false; this.state = 'hidden'; }
-    }
-  }
-  draw() {
-    if (!this.active || this.alpha <= 0) return;
-    ctx.save();
-    ctx.globalAlpha = this.alpha;
-    ctx.strokeStyle = CONFIG_LEGACY.colorCross;
-    ctx.lineWidth = 2.5;
-    ctx.shadowBlur = 14;
-    ctx.shadowColor = CONFIG_LEGACY.colorCross;
-    ctx.translate(this.x, this.y);
-    ctx.beginPath();
-    ctx.moveTo(-this.size/2, 0); ctx.lineTo(this.size/2, 0);
-    ctx.moveTo(0, -this.size/2); ctx.lineTo(0, this.size/2);
-    ctx.stroke();
-    ctx.restore();
-  }
-}
-
-const neonCross = new NeonCross();
-setInterval(() => { neonCross.spawn(); }, CONFIG_LEGACY.crossInterval);
-setTimeout(() => { neonCross.spawn(); }, 1500);
-
-// Bucle de Animación
-function animate() {
-  ctx.clearRect(0, 0, width, height);
-
-  const grad = ctx.createRadialGradient(centerX, centerY, 30, centerX, centerY, Math.max(width, height) * 0.75);
-  grad.addColorStop(0, CONFIG_LEGACY.colorBgCenter);
-  grad.addColorStop(0.35, CONFIG_LEGACY.colorBgMid);
-  grad.addColorStop(0.7, CONFIG_LEGACY.colorBgOuter);
-  grad.addColorStop(1, CONFIG_LEGACY.colorBgCenter);
-
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, width, height);
-
-  particles.forEach(p => { p.update(); p.draw(); });
-  neonCross.update();
-  neonCross.draw();
-
-  requestAnimationFrame(animate);
-}
-animate();
-
-} // FIN: Código anterior deshabilitado
-
-// --- 3. NAVEGACIÓN Y CAMBIO DE CAPAS ---
 let currentLayer = 0;
 const totalLayers = 4; // Cambiado a 4 capas
 let isAnimating = false;
@@ -492,7 +341,9 @@ window.addEventListener('touchend', (e) => {
 // Hacer la función accesible globalmente para los clics en las viñetas (dots)
 window.changeLayer = changeLayer;
 
-// --- 4. DATOS Y LÓGICA DE INTEGRANTES (CAPA 04) ---
+// ==========================================
+// CAPA 04: DATOS Y LOGICA DE INTEGRANTES
+// ==========================================
 const teamMembers = [
   {
     name: "Julian Andres Correa Cuevas",
@@ -647,7 +498,7 @@ if (document.readyState === 'loading') {
 }
 
 // ==========================================
-// LÓGICA INTERACTIVA CAPA 02 (MIMETIC & TRIAGE)
+// CAPA 02: MIMETIC Y TRIAGE
 // ==========================================
 
 function switchLayer1Tab(tabName) {
@@ -706,7 +557,7 @@ function cycleCards(direction) {
 }
 
 // ==========================================
-// LÓGICA DE CAPTURA DE LEADS (CAPA 03)
+// CAPA 03: CAPTURA DE LEADS
 // ==========================================
 
 function validateLeadForm() {
