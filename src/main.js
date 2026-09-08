@@ -270,78 +270,6 @@ function initWebThreads(options = {}) {
 }
 
 // ==========================================
-// NAVEGACION ENTRE CAPAS
-// ==========================================
-const CONFIG = {
-  cooldownScroll: 600, // Tiempo de espera entre cambios de capa
-};
-let currentLayer = 0;
-const totalLayers = 4; // Cambiado a 4 capas
-let isAnimating = false;
-
-function changeLayer(nextLayer) {
-  if (nextLayer === currentLayer || isAnimating) return;
-  isAnimating = true;
-
-  const currentEl = document.getElementById(`layer-${currentLayer}`);
-  if (currentEl) {
-    currentEl.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
-    currentEl.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-  }
-  
-  const currentDot = document.getElementById(`dot-${currentLayer}`);
-  if (currentDot) {
-    currentDot.classList.remove('bg-cyan-400', 'ring-4', 'ring-cyan-500/20');
-    currentDot.classList.add('bg-slate-700');
-  }
-
-  currentLayer = nextLayer;
-  const nextEl = document.getElementById(`layer-${currentLayer}`);
-  if (nextEl) {
-    nextEl.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
-    nextEl.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
-  }
-
-  const nextDot = document.getElementById(`dot-${currentLayer}`);
-  if (nextDot) {
-    nextDot.classList.remove('bg-slate-700');
-    nextDot.classList.add('bg-cyan-400', 'ring-4', 'ring-cyan-500/20');
-  }
-
-  setTimeout(() => { isAnimating = false; }, CONFIG.cooldownScroll);
-}
-
-// Escuchar eventos de entrada
-window.addEventListener('wheel', (e) => {
-  if (isAnimating || Math.abs(e.deltaY) < 10) return;
-  if (e.deltaY > 0 && currentLayer < totalLayers - 1) changeLayer(currentLayer + 1);
-  else if (e.deltaY < 0 && currentLayer > 0) changeLayer(currentLayer - 1);
-}, { passive: true });
-
-window.addEventListener('keydown', (e) => {
-  if (isAnimating) return;
-  if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-    if (currentLayer < totalLayers - 1) changeLayer(currentLayer + 1);
-  } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-    if (currentLayer > 0) changeLayer(currentLayer - 1);
-  }
-});
-
-let touchStartY = 0;
-window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
-window.addEventListener('touchend', (e) => {
-  if (isAnimating) return;
-  const diffY = touchStartY - e.changedTouches[0].clientY;
-  if (Math.abs(diffY) > 50) {
-    if (diffY > 0 && currentLayer < totalLayers - 1) changeLayer(currentLayer + 1);
-    else if (diffY < 0 && currentLayer > 0) changeLayer(currentLayer - 1);
-  }
-}, { passive: true });
-
-// Hacer la función accesible globalmente para los clics en las viñetas (dots)
-window.changeLayer = changeLayer;
-
-// ==========================================
 // CAPA 04: DATOS Y LOGICA DE INTEGRANTES
 // ==========================================
 const teamMembers = [
@@ -482,8 +410,8 @@ function startWebThreads() {
       frequency: 5.0,
       spread: 0.18,
       thickness: 1.1,
-      brightness: 0.6,
-      opacity: 0.8
+      brightness: 0.35,
+      opacity: 0.5
     });
   } else {
     console.log('OGL aún no disponible, reintentando...');
@@ -506,6 +434,7 @@ function switchLayer1Tab(tabName) {
   const btnTriage = document.getElementById('btn-tab-triage');
   const viewMimetic = document.getElementById('view-mimetic-cards');
   const viewTriage = document.getElementById('view-triage-cards');
+  const layerDescription = document.getElementById('layer1-description');
 
   if (tabName === 'mimetic') {
     btnMimetic.classList.add('active', 'text-white');
@@ -515,6 +444,9 @@ function switchLayer1Tab(tabName) {
 
     viewMimetic.classList.remove('hidden');
     viewTriage.classList.add('hidden');
+    if (layerDescription) {
+      layerDescription.textContent = 'Solución tecnológica a la gestión de recursos hospitalarios y flujo de pacientes en tiempo real.';
+    }
   } else if (tabName === 'triage') {
     btnTriage.classList.add('active', 'text-white');
     btnTriage.classList.remove('text-slate-400');
@@ -523,6 +455,9 @@ function switchLayer1Tab(tabName) {
 
     viewTriage.classList.remove('hidden');
     viewMimetic.classList.add('hidden');
+    if (layerDescription) {
+      layerDescription.textContent = 'Regulación del sistema de clasificación médica según la Resolución 5596 de 2015';
+    }
   }
 }
 

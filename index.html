@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-black text-slate-100 overflow-hidden">
+<html lang="es" class="bg-black text-slate-100">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,7 @@
 
 </head>
 
-<body class="h-full relative font-sans select-none bg-black">
+<body class="relative font-sans select-none bg-black">
   <!-- FONDO: WebThreads animado -->
   <div id="web-threads-bg" class="fixed inset-0 z-0 pointer-events-none"></div>
 
@@ -34,20 +34,12 @@
       </a>
     </div>
   </header>
-  <!-- NAVEGACION: indicadores laterales de capas -->
-  <div class="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3">
-    <button onclick="changeLayer(0)" aria-label="Ir a capa 1" id="dot-0" class="w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-500/20 transition-all duration-300 cursor-pointer"></button>
-    <button onclick="changeLayer(1)" aria-label="Ir a capa 2" id="dot-1" class="w-3 h-3 rounded-full bg-slate-700 transition-all duration-300 cursor-pointer"></button>
-    <button onclick="changeLayer(2)" aria-label="Ir a capa 3" id="dot-2" class="w-3 h-3 rounded-full bg-slate-700 transition-all duration-300 cursor-pointer"></button>
-    <button onclick="changeLayer(3)" aria-label="Ir a capa 4" id="dot-3" class="w-3 h-3 rounded-full bg-slate-700 transition-all duration-300 cursor-pointer"></button>
-  </div>
-
   <!-- CONTENIDO PRINCIPAL: capas de Mimetic -->
-  <main class="relative z-10 w-full h-full">
+  <main class="relative z-10 w-full">
 
 
     <!-- CAPA 01: presentacion de Mimetic -->
-    <section id="layer-0" class="layer-transition absolute inset-0 opacity-100 scale-100 pointer-events-auto hero-layer-container">
+    <section id="layer-0" class="landing-section layer-transition relative min-h-screen opacity-100 scale-100 pointer-events-auto hero-layer-container">
       
       <!-- CONTENEDOR PRINCIPAL DE 2 COLUMNAS -->
       <div class="hero-grid-wrapper">
@@ -88,15 +80,10 @@
 
       </div>
 
-      <!-- NAVEGACIÓN CENTRADA EN LA PARTE INFERIOR -->
-      <div class="hero-scroll-hint">
-        ↓ Para navegar usa Scroll o las flechas ↓
-      </div>
-
     </section>
 
       <!-- CAPA 02: MIMETIC y Triage -->
-    <section id="layer-1" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none flex flex-col items-center justify-between p-6 md:p-12 overflow-hidden z-10">
+    <section id="layer-1" class="landing-section layer-transition relative min-h-screen flex flex-col items-center justify-between p-6 md:p-12">
 
       <!-- Glow / Resplandor Ambiental central -->
       <div class="layer1-glow-bg"></div>
@@ -109,7 +96,7 @@
           <h2 id="layer1-title" class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-none">
             ¿Qué es <span class="layer1-title-gradient">Mimetic</span>?
           </h2>
-          <p class="text-slate-500 text-xs md:text-sm mt-3 font-mono">
+          <p id="layer1-description" class="layer1-description text-slate-200 text-xs md:text-sm mt-3 font-mono">
             Solución tecnológica a la gestión de recursos hospitalarios y flujo de pacientes en tiempo real.
           </p>
         </div>
@@ -276,7 +263,7 @@
     </section>
 
       <!-- CAPA 03: registro de leads e innovacion hospitalaria -->
-    <section id="layer-2" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none flex flex-col items-center justify-center p-6 md:p-12 overflow-hidden z-10">
+    <section id="layer-2" class="landing-section layer-transition relative min-h-screen flex flex-col items-center justify-center p-6 md:p-12">
 
       <!-- Resplandor Ambiental Radial -->
       <div class="layer2-glow-bg"></div>
@@ -352,7 +339,7 @@
         <div class="layer2-dashboard bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-4 md:p-6 flex items-center justify-center h-full min-h-[380px] relative overflow-hidden text-left shadow-2xl">
           <!-- Glow Bleed Purpura -->
           <div class="card-glow-bleed bg-purple-500/20"></div>
-          <img src="" alt="Imagen de mimetic" class="layer2-image" />
+          <img src="Images/betaImg.svg" alt="Imagen del newsletter" class="layer2-image" />
         </div>
 
       </div>
@@ -360,8 +347,8 @@
     </section>
 
     <!-- CAPA 04: equipo de Mimetic -->
-    <section id="layer-3" class="layer-transition absolute inset-0 opacity-0 scale-90 pointer-events-none overflow-hidden bg-black flex items-start justify-center">
-      <div class="layer3-bottom-panel relative w-full h-full bg-black overflow-y-auto flex items-start justify-center">
+    <section id="layer-3" class="landing-section layer-transition relative min-h-screen bg-black flex items-start justify-center">
+      <div class="layer3-bottom-panel relative w-full min-h-screen bg-black flex items-start justify-center">
         <div class="relative z-10 w-full min-h-full flex flex-col items-center justify-start px-6 pt-28 pb-12 md:px-16 md:pt-36">
           
           <div class="layer3-team-content relative w-full max-w-6xl">
