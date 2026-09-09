@@ -177,6 +177,199 @@ body {
 }
 
 /* ========================================== */
+/* CAPA 04: CARRUSEL DEL EQUIPO               */
+/* ========================================== */
+.layer3-team-shell {
+  background: #000000;
+}
+
+.layer3-carousel {
+  overflow: hidden;
+  padding: 0.5rem 0 1rem;
+}
+
+.layer3-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.layer3-member-card {
+  position: relative;
+  flex: 0 0 calc((100% - 3rem) / 4);
+  min-height: 26rem;
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 1.25rem;
+  background: linear-gradient(160deg, #1a1a1a 0%, #0b0b0b 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 1.5rem 3rem rgba(0, 0, 0, 0.35);
+}
+
+.layer3-member-card::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 70%, rgba(0, 0, 0, 0.22) 80%, rgba(0, 0, 0, 0.86) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+.layer3-card-silhouette {
+  display: grid;
+  place-items: center;
+  height: 17rem;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 38%, rgba(34, 211, 238, 0.2), transparent 13%), radial-gradient(ellipse at 50% 85%, rgba(168, 85, 247, 0.28), transparent 48%), #111111;
+  color: rgba(255, 159, 252, 0.58);
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.layer3-card-silhouette img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.78;
+  filter: none;
+}
+
+.layer3-card-silhouette img.manuel-profile {
+  object-position: center 22%;
+}
+
+.layer3-member-card.manuel-card .layer3-card-silhouette {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+.layer3-member-card.manuel-card .manuel-profile {
+  object-position: center 32%;
+}
+
+.layer3-card-copy {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  z-index: 1;
+}
+
+.layer3-card-copy h3 {
+  margin-top: 0.4rem;
+  color: #f4f0e8;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.layer3-github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.75rem;
+  border: 1px solid rgba(103, 232, 249, 0.45);
+  border-radius: 9999px;
+  background: rgba(8, 47, 73, 0.72);
+  color: #cffafe;
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+
+.layer3-github-link:hover {
+  border-color: #ff9ffc;
+  background: rgba(82, 39, 255, 0.7);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.layer3-github-link svg {
+  display: none;
+}
+
+.layer3-github-link::before {
+  width: 1rem;
+  height: 1rem;
+  background: center / contain no-repeat url('https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png');
+  content: '';
+  filter: invert(1);
+}
+
+.layer3-github-link > span {
+  display: none;
+}
+
+.layer3-card-role {
+  color: #67e8f9;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.layer3-next-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 0.95rem 0.7rem 1rem;
+  border: 1px solid rgba(34, 211, 238, 0.55);
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.88);
+  color: #cffafe;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.layer3-next-button:hover {
+  border-color: #ff9ffc;
+  background: rgba(82, 39, 255, 0.28);
+  transform: translateX(-0.25rem);
+}
+
+.layer3-carousel-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+  padding-right: 0.25rem;
+}
+
+.layer3-next-button svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+@media (max-width: 640px) {
+  .layer3-member-card {
+    flex-basis: calc(100% - 2.5rem);
+    min-height: 23rem;
+  }
+
+  .layer3-card-silhouette {
+    height: 15rem;
+  }
+
+  .layer3-next-button {
+    padding-inline: 0.8rem;
+  }
+
+  .layer3-next-button span {
+    display: none;
+  }
+}
+
+/* ========================================== */
 /* NAVEGACION: BARRA GLASSMORPHISM            */
 /* ========================================== */
 

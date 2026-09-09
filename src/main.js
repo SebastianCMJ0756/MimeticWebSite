@@ -397,6 +397,61 @@ window.prevMember = prevMember;
 document.addEventListener('DOMContentLoaded', updateMemberCard);
 updateMemberCard();
 
+function initTeamCarousel() {
+  const carousel = document.getElementById('team-carousel');
+  const track = document.getElementById('team-track');
+  const nextButton = document.getElementById('team-next');
+  const progress = document.getElementById('team-progress');
+  if (!carousel || !track || !nextButton) return;
+
+  const cards = Array.from(track.children);
+  let currentOffset = 0;
+
+  const getLayout = () => {
+    const card = cards[0];
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+    const step = card.getBoundingClientRect().width + gap;
+    const visibleCards = Math.max(1, Math.round((carousel.clientWidth + gap) / step));
+    return { step, maxOffset: Math.max(0, cards.length - visibleCards) };
+  };
+
+  const render = () => {
+    const { step, maxOffset } = getLayout();
+    if (currentOffset > maxOffset) currentOffset = 0;
+    track.style.transform = `translate3d(-${currentOffset * step}px, 0, 0)`;
+    if (progress) progress.textContent = `${String(currentOffset + 1).padStart(2, '0')} / ${String(maxOffset + 1).padStart(2, '0')}`;
+  };
+
+  nextButton.addEventListener('click', () => {
+    const { maxOffset } = getLayout();
+    currentOffset = currentOffset >= maxOffset ? 0 : currentOffset + 1;
+    render();
+  });
+
+  window.addEventListener('resize', render);
+  render();
+}
+
+function removeTeamGithubPaths() {
+  document.querySelectorAll('.layer3-github-link svg').forEach((icon) => {
+    const replacement = document.createElement('span');
+    replacement.setAttribute('aria-hidden', 'true');
+    replacement.textContent = 'GH';
+    icon.replaceWith(replacement);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    removeTeamGithubPaths();
+    initTeamCarousel();
+  });
+} else {
+  removeTeamGithubPaths();
+  initTeamCarousel();
+}
+
 function startWebThreads() {
   const OGL = getOGL();
   if (OGL && (OGL.Renderer || window.Renderer)) {
