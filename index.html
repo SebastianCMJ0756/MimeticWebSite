@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" class="bg-black text-slate-100">
 <head>
   <meta charset="UTF-8" />
@@ -271,7 +271,7 @@
       <!-- CONTENEDOR PRINCIPAL DE 2 COLUMNAS -->
       <div class="layer2-content w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-stretch z-10">
         
-        <!-- COLUMNA IZQUIERDA: FORMULARIO GLOWMORPHIC DE SUSCRIPCIÓN -->
+        <!-- COLUMNA IZQUIERDA: FORMULARIO GLOWMORPHIC DE SUSCRIPCI�"N -->
         <div class="layer2-form-card bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden text-left">
           <!-- Esquina de luz/Glow Bleed -->
           <div class="card-glow-bleed bg-cyan-500/20"></div>
@@ -335,7 +335,7 @@
           </div>
         </div>
 
-        <!-- COLUMNA DERECHA: DASHBOARD TÉCNICO / ILUSTRACIÓN -->
+        <!-- COLUMNA DERECHA: DASHBOARD T�?CNICO / ILUSTRACI�"N -->
         <div class="layer2-dashboard bg-slate-950/70 backdrop-blur-xl border border-white/10 rounded-2xl p-4 md:p-6 flex items-center justify-center h-full min-h-[380px] relative overflow-hidden text-left shadow-2xl">
           <!-- Glow Bleed Purpura -->
           <div class="card-glow-bleed bg-purple-500/20"></div>
@@ -347,53 +347,26 @@
     </section>
 
     <!-- CAPA 04: equipo de Mimetic -->
-    <section id="layer-3" class="landing-section layer-transition relative min-h-screen bg-black flex items-start justify-center">
-      <div class="layer3-bottom-panel relative w-full min-h-screen bg-black flex items-start justify-center">
-        <div class="relative z-10 w-full min-h-full flex flex-col items-center justify-start px-6 pt-28 pb-12 md:px-16 md:pt-36">
-          
-          <div class="layer3-team-content relative w-full max-w-6xl">
-            <!-- Contenedor sólo para el título -->
-            <div class="layer3-team-title-wrap">
-              <h2 class="layer3-team-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-purple-400 tracking-tight text-center">
-                Equipo de Mimetic
-              </h2>
-            </div>
-            <br>
-
-            <!-- Bloque independiente para el miembro -->
-            <div class="layer3-member-card mt-8">
-              <div class="layer3-team-grid w-full grid grid-cols-1 md:grid-cols-[auto_1fr] items-center gap-10 md:gap-16 min-h-[320px]">
-              
-                <!-- COLUMNA IZQUIERDA: Foto + Enlaces horizontales debajo -->
-                <div class="layer3-team-avatar flex flex-col items-center justify-center gap-5">
-                  <div class="layer3-avatar-ring w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-purple-500 to-rose-500 shadow-[0_0_25px_rgba(168,85,247,0.35)] shrink-0">
-                    <img id="member-img" src="Images/profiletest.png" alt="Foto integrante" class="w-full h-full object-cover rounded-full bg-slate-900" />
-                  </div>
-
-                  <!-- Enlaces horizontales alineados debajo de la foto -->
-                  <div id="member-links" class="layer3-team-links flex flex-row items-center justify-center gap-3 min-h-[44px] w-full"></div>
-                </div>
-
-                <!-- COLUMNA DERECHA: Nombre y descripción, centradas verticalmente con la imagen -->
-                <div class="layer3-team-text text-center md:text-left flex flex-col justify-center">
-                  <h3 id="member-name" class="text-3xl sm:text-4xl font-black text-cyan-400 tracking-tight"></h3>
-                  <p id="member-desc" class="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto md:mx-0 font-light leading-relaxed mt-4"></p>
-                </div>
-
+    <section id="layer-3" class="landing-section layer-transition relative min-h-screen bg-black text-white flex items-center justify-center">
+      <div class="layer3-team-shell relative z-10 w-full overflow-hidden px-5 py-28 sm:px-8 md:py-36">
+        <div class="mx-auto w-full max-w-7xl">
+          <p class="layer3-eyebrow text-center text-xs font-semibold tracking-[0.45em] text-cyan-300 sm:text-sm">CONOCE A NUESTRO EQUIPO</p>
+          <div class="layer3-carousel-wrap relative mt-12 sm:mt-16">
+            <div id="team-carousel" class="layer3-carousel" aria-label="Integrantes del equipo">
+              <div id="team-track" class="layer3-track">
+                <article class="layer3-member-card"><div class="layer3-card-silhouette"><img src="Images/julianprofile.svg" alt="Retrato de Julian Andres Correa Cuevas" onerror="this.src='Images/profiletest.png'" /></div><div class="layer3-card-copy"><p class="layer3-card-role">Lider del proyecto y desarrollador backend</p><h3>Julian Andres Correa Cuevas</h3><a class="layer3-github-link" href="https://github.com/SUBHWEI" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Julian Andres Correa Cuevas"><span aria-hidden="true">GH</span></a></div></article>
+                <article class="layer3-member-card"><div class="layer3-card-silhouette"><img src="Images/ManuelProfile.jpeg" alt="Retrato de Manuel Jose Rivera Guzman" onerror="this.src='Images/profiletest.png'" /></div><div class="layer3-card-copy"><p class="layer3-card-role">Colider y desarrollador backend</p><h3>Manuel Jose Rivera Guzman</h3><a class="layer3-github-link" href="https://github.com/Manuel1532PK" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Manuel Jose Rivera Guzman"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></a></div></article>
+                <article class="layer3-member-card"><div class="layer3-card-silhouette"><img src="Images/SebastianProfile.jpeg" alt="Retrato de Juan Sebastian Calderon Martinez" onerror="this.src='Images/profiletest.png'" /></div><div class="layer3-card-copy"><p class="layer3-card-role">Desarrollador frontend y documentador principal</p><h3>Juan Sebastian Calderon Martinez</h3><a class="layer3-github-link" href="https://github.com/SebastianCMJ0756" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Juan Sebastian Calderon Martinez"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></a></div></article>
+                <article class="layer3-member-card"><div class="layer3-card-silhouette"><img src="Images/josecamiloprofile.svg" alt="Retrato de Jose Camilo Ortegon" onerror="this.src='Images/profiletest.png'" /></div><div class="layer3-card-copy"><p class="layer3-card-role">Segundo a cargo de la documentación</p><h3>Jose Camilo Rodriguez Ortegon</h3><a class="layer3-github-link" href="https://github.com/JoseCamiloRodriguezOrtegon" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Jose Camilo Rodriguez Ortegon"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></a></div></article>
+                <article class="layer3-member-card"><div class="layer3-card-silhouette"><img src="Images/EstebanProfile.jpeg" alt="Retrato de Esteban Morales" onerror="this.src='Images/profiletest.png'" /></div><div class="layer3-card-copy"><p class="layer3-card-role">Asesor en el area de programacion de los proyectos del semillero QUANTUM.</p><h3>Esteban Morales</h3><a class="layer3-github-link" href="https://github.com/estemoca" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Esteban Morales"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></a></div></article>
+                <article class="layer3-member-card"><div class="layer3-card-silhouette"><img src="Images/JuanCarlosProfile.png" alt="Retrato de Juan Carlos Gonzales" onerror="this.src='Images/profiletest.png'" /></div><div class="layer3-card-copy"><p class="layer3-card-role">Asesor en el área de documentación de los proyectos del semillero QUANTUM.</p><h3>Juan Carlos Gonzales</h3><a class="layer3-github-link" href="" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Juan Carlos Gonzales"><svg viewBox="0 0 24 24" aria-hidden="true"></svg></a></div></article>
               </div>
             </div>
           </div>
-
-          <!-- Botones de navegación -->
-          <div class="layer3-team-nav flex items-center justify-center gap-4 mt-10 md:mt-12">
-            <button onclick="prevMember()" aria-label="Integrante anterior" class="layer3-nav-button cursor-pointer">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
-            </button>
-            <button onclick="nextMember()" aria-label="Siguiente integrante" class="layer3-nav-button cursor-pointer">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
-            </button>
+          <div class="layer3-carousel-actions">
+            <button id="team-next" type="button" aria-label="Siguiente integrante" class="layer3-next-button"><span>Siguiente</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-6 6 6-6 6" /></svg></button>
           </div>
-
+          <div id="team-progress" class="mt-8 text-center text-[0.65rem] font-semibold tracking-[0.3em] text-white/40" aria-live="polite">01 / 03</div>
         </div>
       </div>
     </section>
