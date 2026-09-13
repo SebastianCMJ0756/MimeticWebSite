@@ -180,7 +180,7 @@ function initWebThreads(options = {}) {
       alpha: true,
       premultipliedAlpha: true,
       antialias: false,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
+      dpr: Math.min(window.devicePixelRatio || 1, window.matchMedia('(pointer: coarse)').matches ? 1 : 1.5)
     });
 
     const gl = renderer.gl;
@@ -228,11 +228,16 @@ function initWebThreads(options = {}) {
       const w = Math.max(1, Math.floor(rect.width));
       const h = Math.max(1, Math.floor(rect.height));
       renderer.setSize(w, h);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
       program.uniforms.iResolution.value[0] = gl.drawingBufferWidth;
       program.uniforms.iResolution.value[1] = gl.drawingBufferHeight;
     };
 
     window.addEventListener('resize', setSize);
+    window.visualViewport?.addEventListener('resize', setSize);
+    const resizeObserver = new ResizeObserver(setSize);
+    resizeObserver.observe(container);
     setSize();
 
     // Escuchar eventos del ratón
@@ -241,14 +246,25 @@ function initWebThreads(options = {}) {
     let currentActive = 0;
     let targetActive = 0;
 
-    window.addEventListener('mousemove', (e) => {
-      targetMouse[0] = e.clientX / window.innerWidth;
-      targetMouse[1] = 1.0 - (e.clientY / window.innerHeight);
+    const updatePointer = (clientX, clientY) => {
+      targetMouse[0] = clientX / window.innerWidth;
+      targetMouse[1] = 1.0 - (clientY / window.innerHeight);
       targetActive = 1;
-    });
+    };
+
+    window.addEventListener('pointermove', (e) => updatePointer(e.clientX, e.clientY), { passive: true });
 
     const t0 = performance.now();
+    let isPageVisible = !document.hidden;
+    document.addEventListener('visibilitychange', () => {
+      isPageVisible = !document.hidden;
+    });
+
     function loop(t) {
+      if (!isPageVisible) {
+        requestAnimationFrame(loop);
+        return;
+      }
       program.uniforms.iTime.value = (t - t0) * 0.001;
       currentMouse[0] += 0.05 * (targetMouse[0] - currentMouse[0]);
       currentMouse[1] += 0.05 * (targetMouse[1] - currentMouse[1]);
@@ -454,6 +470,7 @@ if (document.readyState === 'loading') {
 
 function startWebThreads() {
   const OGL = getOGL();
+  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
   if (OGL && (OGL.Renderer || window.Renderer)) {
     console.log('✅ OGL cargado correctamente, inicializando WebThreads...');
     initWebThreads({
@@ -461,12 +478,13 @@ function startWebThreads() {
       color2: "#FF9FFC",
       color3: "#FFFFFF",
       speed: 0.2,
-      threadCount: 6,
+      threadCount: isCoarsePointer ? 4 : 6,
       frequency: 5.0,
       spread: 0.18,
       thickness: 1.1,
       brightness: 0.35,
-      opacity: 0.5
+      opacity: 0.5,
+      grain: !isCoarsePointer
     });
   } else {
     console.log('OGL aún no disponible, reintentando...');
