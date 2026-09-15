@@ -297,15 +297,15 @@
           </div>
 
           <!-- Formulario de Captura -->
-          <form id="lead-form" onsubmit="handleLeadSubmit(event)" class="space-y-4">
+          <form id="newsletter-form" class="space-y-4">
             <!-- Input Nombres y Apellidos -->
             <div>
               <label for="lead-fullname" class="block text-xs font-mono text-slate-300 mb-1.5">Nombres y Apellidos *</label>
               <input 
                 type="text" 
-                id="lead-fullname" 
+                id="lead-fullname"
+                name="nombre_completo"
                 placeholder="Ej. María Fernanda Gómez"
-                oninput="validateLeadForm()"
                 class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/40 transition-all duration-300"
                 required
               />
@@ -316,9 +316,9 @@
               <label for="lead-email" class="block text-xs font-mono text-slate-300 mb-1.5">Correo Electrónico *</label>
               <input 
                 type="email" 
-                id="lead-email" 
+                id="lead-email"
+                name="email"
                 placeholder="ejemplo@hospital.com.co"
-                oninput="validateLeadForm()"
                 class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/40 transition-all duration-300"
                 required
               />
@@ -327,13 +327,14 @@
             <!-- Botón de Suscripción con Estados -->
             <button 
               type="submit" 
-              id="btn-lead-submit" 
-              disabled
+              id="btn-submit"
               class="layer2-submit w-full py-3.5 px-6 rounded-xl font-bold text-slate-200 bg-slate-800 opacity-50 cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 mt-2"
             >
-              <span id="btn-text">Suscribirme</span>
+              Suscribirme
             </button>
           </form>
+
+          <p id="mensaje-respuesta" class="hidden mt-4 text-sm" role="status" aria-live="polite"></p>
 
           <!-- Indicador de Estado -->
           <div class="mt-6 pt-4 border-t border-white/10 flex items-center gap-2 text-xs font-mono text-slate-400">
@@ -382,5 +383,6 @@
 
   <!-- SCRIPTS: logica interactiva -->
   <script src="./src/main.js"></script>
+  <script src="./src/newsletterConfig.js"></script>
 </body>
 </html>
